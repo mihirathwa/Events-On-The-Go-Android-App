@@ -20,7 +20,6 @@ import java.util.List;
  */
 
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<Quote>> {
-//    private static MyApi myApiService = null;
     private static QuoteApi myApiService = null;
     private Context context;
 
@@ -31,13 +30,6 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<Quote>> {
 
     @Override
     protected List<Quote> doInBackground(Void... params) {
-//        if (myApiService == null) {
-//            MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
-//                    new AndroidJsonFactory(), null)
-//                    .setRootUrl("https://events-on-the-go.appspot.com/_ah/api/");
-//
-//            myApiService = builder.build();
-//        }
 
         if (myApiService == null) {
            QuoteApi.Builder builder = new QuoteApi.Builder(AndroidHttp.newCompatibleTransport(),

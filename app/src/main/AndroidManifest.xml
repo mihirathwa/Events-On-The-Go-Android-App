@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuoteActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +42,9 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".QuoteActivity"></activity>
+        <activity android:name=".PopUpActivity"
+            android:theme="@style/AppTheme.PopTheme"></activity>
     </application>
 
 </manifest>

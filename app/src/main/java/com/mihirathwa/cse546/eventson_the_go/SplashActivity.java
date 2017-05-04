@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -19,11 +22,13 @@ import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
 
-    LoginButton loginButton;
-    TextView loginStatus;
-    CallbackManager callbackManager;
+    private LoginButton loginButton;
+    private TextView loginStatus;
+    private CallbackManager callbackManager;
+    private static final String TAG = "SplashActivity";
 
-    private static int SPLASH_SCREEN_DELAY = 3000;
+
+    private static int SPLASH_SCREEN_DELAY = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +40,37 @@ public class SplashActivity extends AppCompatActivity {
 
         loginStatus = (TextView) findViewById(R.id.AS_loginStatus);
 
+        if (AccessToken.getCurrentAccessToken() != null) {
+            goToMapsActivity();
+        } else {
+            askFacebookLogin();
+        }
+    }
+
+    protected void goToMapsActivity() {
+        final String currentAccessToken = AccessToken.getCurrentAccessToken().getToken();
+
+        Toast.makeText(SplashActivity.this, "Here You Go..", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, EventsMapActivity.class);
+                intent.putExtra("fbAccessToken", currentAccessToken);
+                startActivity(intent);
+
+                finish();
+            }
+        }, SPLASH_SCREEN_DELAY);
+    }
+
+    protected void askFacebookLogin(){
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(SplashActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(SplashActivity.this, EventsMapActivity.class);
-                startActivity(intent);
-
-                finish();
+                goToMapsActivity();
             }
 
             @Override
@@ -57,17 +83,6 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(SplashActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        //set delay at Splash Screen
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(SplashActivity.this, EventsMapActivity.class);
-//                startActivity(intent);
-//
-//                finish();
-//            }
-//        }, SPLASH_SCREEN_DELAY);
     }
 
     @Override

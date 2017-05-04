@@ -12,6 +12,7 @@ public class OfyService {
 
     static {
         ObjectifyService.register(Quote.class);
+        ObjectifyService.register(FacebookGraph.class);
     }
 
     public static Objectify ofy() {

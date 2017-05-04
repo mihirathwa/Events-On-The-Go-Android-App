@@ -2,4 +2,5 @@
     <string name="app_name">Events On-The-Go</string>
     <string name="google_maps_api_key">AIzaSyB8Q94SIPRT1X1y9mJKdWZLz3pV-eUgOw4</string>
     <string name="facebook_app_id">424633684568088</string>
+    <string name="appengine_url">https://events-on-the-go.appspot.com/_ah/api/</string>
 </resources>
